@@ -1,5 +1,5 @@
 <template>
-  Rou
+  <router-view />
 </template>
 
 <script setup lang="ts">
