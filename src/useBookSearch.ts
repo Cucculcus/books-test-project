@@ -40,14 +40,12 @@ export const useBookSearch = async (params: object) => {
     if (!data || !data.items) {
       if (!isUpdate) {
         bookStore.clean()
+        throw new Error('Что-то не так с текстом запроса')
       }
-      return
     }
-
     bookStore.addBooks(data, !isUpdate)
-  } catch (error) {
-    console.error('Ошибка поиска:', error)
-    alert('Не удалось загрузить книги')
+  } catch (e) {
+    throw e
   }
 }
 

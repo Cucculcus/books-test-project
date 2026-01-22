@@ -35,7 +35,7 @@
 
 <script setup lang="ts">
 import { nextTick, onMounted, onUnmounted, ref } from 'vue';
-import { InputText, Card, Button } from 'primevue';
+import { InputText, Card, Button, useToast } from 'primevue';
 import type { searchType } from '@/interfaces';
 import { useBookSearch } from '@/useBookSearch';
 import { useBookStore } from '@/stores/bookStore';
@@ -50,6 +50,16 @@ const bookStore = useBookStore()
 const currentSearchType = ref<searchType>('searchBook')
 const inputValue = ref<string>('Колобок')
 
+const toast = useToast()
+
+const showToast = (severity, summary, detail, life = 3000) => {
+    toast.add({
+        severity,
+        summary,
+        detail,
+        life: life
+    })
+}
 
 function onCard(bookId: string) {
     router.push({ name: 'BookComponent', params: { id: bookId } })
@@ -100,17 +110,19 @@ async function onSearch() {
                 q: `intitle:${inputValue.value}`,
                 maxResults: 20
             })
+
         }
         catch (e) {
-            console.log(e)
+            showToast('error', 'Ошибка', e.message)
         }
     }
     else {
         try {
             await useBookSearch({ q: `inauthor:${inputValue.value}`, maxResults: 20 })
+
         }
         catch (e) {
-            console.log(e)
+            showToast('error', 'Ошибка', e.message)
         }
     }
 

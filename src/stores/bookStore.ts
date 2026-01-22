@@ -44,12 +44,17 @@ export const useBookStore = defineStore('bookStore', () => {
     if (isUpdate) {
       this.clean()
     }
-    const items = data?.items || []
-    for (const item of items) {
-      addBook(item)
+    try {
+      const items = data?.items || []
+      for (const item of items) {
+        addBook(item)
+      }
+    } catch (e) {
+      return {
+        success: false,
+        error: e,
+      }
     }
-    console.log('TEST')
-    console.log(books.value)
   }
   function clean() {
     books.value = {}
