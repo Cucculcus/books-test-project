@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import type { Book } from '@/interfaces'
 
@@ -29,7 +29,7 @@ function createBookFromVolume(item: any): Book {
 export const useBookStore = defineStore('bookStore', () => {
   const books = ref<Record<string, Book>>({})
 
-  //const doubleCount = computed(() => count.value * 2)
+  const find = (key: string) => books.value[key]
 
   function addBook(item) {
     const book = createBookFromVolume(item)
@@ -55,5 +55,5 @@ export const useBookStore = defineStore('bookStore', () => {
     books.value = {}
   }
 
-  return { books, addBooks, clean }
+  return { books, addBooks, clean, find }
 })

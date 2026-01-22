@@ -12,7 +12,7 @@
     <div class="flex justify-center items-center ">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 ">
             <Card @click="onCard(book.id)"
-                class="w-[256px] h-[360px] mb-[10px] w-1/5 border box-border hover:border-[color:var(--p-button-primary-background)] overflow-hidden"
+                class="w-[256px] h-[360px] mb-[10px] border box-border hover:border-(--p-button-primary-background) overflow-hidden"
                 v-for="book in bookStore.books" :key="book.id">
                 <template #header>
                     <img v-if="book.thumbnail" :src="book.thumbnail" alt="Обложка" class="w-full object-fill h-[160px]">
