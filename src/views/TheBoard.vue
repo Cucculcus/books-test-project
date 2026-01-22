@@ -11,7 +11,7 @@
 
     <div class="flex justify-center items-center ">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 ">
-            <Card
+            <Card @click="onCard(book.id)"
                 class="w-[256px] h-[360px] mb-[10px] w-1/5 border box-border hover:border-[color:var(--p-button-primary-background)] overflow-hidden"
                 v-for="book in bookStore.books" :key="book.id">
                 <template #header>
@@ -39,6 +39,9 @@ import { InputText, Card, Button } from 'primevue';
 import type { searchType } from '@/interfaces';
 import { useBookSearch } from '@/useBookSearch';
 import { useBookStore } from '@/stores/bookStore';
+import { useRouter } from 'vue-router';
+
+const router = useRouter()
 
 const threshold = 300
 const isLoading = ref(false)
@@ -46,6 +49,11 @@ const bookStore = useBookStore()
 
 const currentSearchType = ref<searchType>('searchBook')
 const inputValue = ref<string>('Колобок')
+
+
+function onCard(bookId: string) {
+    router.push({ name: 'BookComponent', params: { id: bookId } })
+}
 
 async function onWindowScroll() {
     const scrollTop = window.scrollY

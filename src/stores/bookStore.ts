@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import type { Book } from '@/interfaces'
 
@@ -27,13 +27,17 @@ function createBookFromVolume(item: any): Book {
   }
 }
 export const useBookStore = defineStore('bookStore', () => {
-  const books = ref<Array<Book> | null>([])
+  const books = ref<Record<string, Book>>({})
 
   //const doubleCount = computed(() => count.value * 2)
 
   function addBook(item) {
     const book = createBookFromVolume(item)
-    books.value?.push(book)
+    if (!books.value[book.id]) {
+      books.value[book.id] = book
+    } else {
+      console.warn(`Книга с id ${book.id} уже существует`)
+    }
   }
 
   function addBooks(data, isUpdate: boolean) {
@@ -48,7 +52,7 @@ export const useBookStore = defineStore('bookStore', () => {
     console.log(books.value)
   }
   function clean() {
-    books.value = []
+    books.value = {}
   }
 
   return { books, addBooks, clean }
