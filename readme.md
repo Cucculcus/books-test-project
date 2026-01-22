@@ -68,4 +68,7 @@
 
 ### Установка зависимостей
 ```bash
-npm install
+npm install          # Установка зависимостей проекта
+npm run dev          # Запуск сервера разработки с hot-reload
+npm run build        # Сборка проекта для production
+npm run preview      # Предпросмотр собранного проекта локально
